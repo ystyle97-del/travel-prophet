@@ -134,7 +134,6 @@
     }
 
     function getStartHTML() {
-        const playerCount = document.getElementById('player-inputs')?.children.length || 2;
         return `
             <h1>トラベル・プロフェット<br><small style="font-size:0.9rem; color:#8b4513;">～家族旅行Edition～</small></h1>
             <div style="text-align:center; margin-bottom:20px;">
@@ -216,7 +215,7 @@
                 <button class="btn-undo" onclick="undo()">↩ ひとつ前に戻る</button>
             </div>
 
-            <button onclick="openRule()" style="width:100%; background:#fdf5e6; border:1px solid #8b4513; color:#8b4513; margin-bottom:5px; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;">📜 プロフェット忘れと宣言指摘について</button>
+            <button onclick="openRule()" style="width:100%; background:#fdf5e6; border:1px solid #8b4513; color:#8b4513; margin-bottom:5px; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;">📜 プロフェット忘れと指摘について</button>
             
             <p style="text-align:center; font-size:0.8rem; color:#5c4033; margin:0 0 10px 0;">↓ 予言を達成したら、色に合わせたボタンを押して加点して下さい ↓</p>
             
@@ -235,16 +234,12 @@
     function addInput() {
         const div = document.getElementById('player-inputs');
         const btn = document.getElementById('add-player-btn');
-        if (div.children.length < 5) {
+        if (div && div.children.length < 5) {
             const input = document.createElement('input');
             input.type = 'text'; input.className = 'p-input';
             input.value = 'プレイヤー' + (div.children.length + 1);
             div.appendChild(input);
-            
-            // 5人になったらボタンを消去
-            if (div.children.length === 5) {
-                btn.style.display = 'none';
-            }
+            if (div.children.length === 5 && btn) btn.style.display = 'none';
         }
     }
 
@@ -337,7 +332,9 @@
 
     function openVideo() {
         document.getElementById('video-modal').style.display = 'flex';
-        document.getElementById('youtube-iframe').src = "https://www.youtube.com/embed/630tfPveYvk?rel=0&autoplay=1";
+        // 差し替えた新しい動画ID
+        const videoId = "LDW3Ekt8Kr0"; 
+        document.getElementById('youtube-iframe').src = "https://www.youtube.com/embed/" + videoId + "?rel=0&autoplay=1";
     }
     function closeVideo() {
         document.getElementById('video-modal').style.display = 'none';
