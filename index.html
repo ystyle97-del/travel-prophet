@@ -134,6 +134,7 @@
                 <h3>① 予言の浄化</h3>
                 <p>手持ちのカードの中から達成が難しいと感じるものを1回だけ(何枚でも)捨てることができます。<br><br>捨てたいカードを<b>”伏せたまま”</b>自分の前に並べます。1枚も捨てないことも可能です。</p>
                 <button onclick="state.exchangeStep=2; render();" class="btn btn-copper">全員並べ終えたら次へ</button>
+                <div style="text-align:center;"><button class="btn-undo" onclick="state.phase='start'; render();">↩ プレイヤー登録に戻る</button></div>
             `;
         } else if (state.exchangeStep === 2) {
             content = `
@@ -156,6 +157,7 @@
                     <img src="https://i.postimg.cc/nzGRm4SX/shou-zuaikon.png" width="45" alt="手足">
                 </div>
                 <button onclick="state.exchangeStep=3; render();" class="btn btn-copper" style="margin-top:20px;">全員回収し終えたら次へ</button>
+                <div style="text-align:center;"><button class="btn-undo" onclick="state.exchangeStep=1; render();">↩ 浄化(ステップ1)に戻る</button></div>
             `;
         } else if (state.exchangeStep === 3) {
             content = `
@@ -168,6 +170,7 @@
                     全員が合計6枚になったら冒険の開始です！
                 </div>
                 <button onclick="startMain()" class="btn btn-gold" style="margin-top:20px;">冒険開始（メインへ）</button>
+                <div style="text-align:center;"><button class="btn-undo" onclick="state.exchangeStep=2; render();">↩ 回収(ステップ2)に戻る</button></div>
             `;
         }
         return `<h1>交換フェイズ</h1><div class="step-card">${content}</div>`;
@@ -223,6 +226,7 @@
         const inputs = document.querySelectorAll('.p-input');
         state.players = Array.from(inputs).map(i => ({ name: i.value, score: 0, copper: 0, silver: 0, gold: 0, earlyBird: null }));
         state.phase = 'exchange';
+        state.exchangeStep = 1;
         render();
     }
 
@@ -306,7 +310,6 @@
 
     function openVideo() {
         document.getElementById('video-modal').style.display = 'flex';
-        // 指定された新しい動画IDに差し替え
         const videoId = "0rsxbwzfy3k"; 
         document.getElementById('youtube-iframe').src = "https://www.youtube.com/embed/" + videoId + "?rel=0&autoplay=1";
     }
