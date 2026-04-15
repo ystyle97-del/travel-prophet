@@ -132,7 +132,7 @@
         if (state.exchangeStep === 1) {
             content = `
                 <h3>① 予言の浄化</h3>
-                <p>手持ちのカードの中から達成が難しいと感じるものを1回だけ(何枚でも)捨てることができます。<br><br>捨てたいカードを<b>”伏せたまま”</b>自分の前に並べます。1枚も捨てないことも可能です。</p>
+                <p>手持ちのカードの中から達成が難しいと感じるものを<b>1回だけ</b>(<b>何枚でも</b>)捨てることができます。<br><br>捨てたいカードを<b>”伏せたまま”</b>自分の前に並べます。1枚も捨てないことも可能です。</p>
                 <button onclick="state.exchangeStep=2; render();" class="btn btn-copper">全員並べ終えたら次へ</button>
                 <div style="text-align:center;"><button class="btn-undo" onclick="state.phase='start'; render();">↩ プレイヤー登録に戻る</button></div>
             `;
@@ -143,14 +143,15 @@
                 <div class="important-note">
                     回収したカードはまだ手札の中には入れず、自分の前に伏せたまま並べておくこと！
                 </div>
-                <p style="font-size:0.85rem; margin-top:5px;"><b>1枚回収するごとに1点加点！</b></p>
+                <p style="font-size:1.1rem; margin-top:10px; text-align:center; background:#d32f2f; color:white; padding:5px; border-radius:5px; font-weight:bold; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">1枚回収するごとに1点加点！</p>
                 ${state.players.map((p, i) => `
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; padding:10px; background:white; border-radius:5px; border:1px solid #ddd;">
                         <span><b>${p.name}</b>: ${p.score}pt</span>
                         <button class="btn-point" onclick="addExPoint(${i})">+1点</button>
                     </div>
                 `).join('')}
-                <p style="font-size:0.8rem; color:#666; margin-top:10px;">※予言の中身は見えません。属性(目・口・手足)だけを頼りにしてください。被ったら当人同士で交渉！</p>
+                <div style="text-align:right;"><button class="btn-undo" onclick="undo()">↩ 1点取消(戻る)</button></div>
+                <p style="font-size:0.8rem; color:#666; margin-top:10px;">※予言の中身は見えません。属性(目・口・手足)だけを頼りにしてください。回収したいカードが被ったら当人同士で交渉！</p>
                 <div style="display:flex; gap:5px; margin-top:10px; justify-content:center;">
                     <img src="https://i.postimg.cc/8CNHNQcv/muaikon.png" width="45" alt="目">
                     <img src="https://i.postimg.cc/Y2fKNgLz/kouaikon.png" width="45" alt="口">
@@ -165,9 +166,9 @@
                 <p>手札の枚数を<b>金1枚、銀2枚、銅3枚 (計6枚)</b>となるようにします。<br><br>
                 1. 回収したカードは<b>必ず</b>手札に入れます。<br>
                 2. 最初に配られた手札から超過分を捨てて調整します。<br>
-                3. 足りない場合は山札から補充します。</p>
+                3. 足りない場合は<b>山札から</b>補充します。</p>
                 <div class="important-note">
-                    全員が合計6枚になったら冒険の開始です！
+                    全員の手札が計6枚になったら冒険の開始です！
                 </div>
                 <button onclick="startMain()" class="btn btn-gold" style="margin-top:20px;">冒険開始（メインへ）</button>
                 <div style="text-align:center;"><button class="btn-undo" onclick="state.exchangeStep=2; render();">↩ 回収(ステップ2)に戻る</button></div>
@@ -196,7 +197,9 @@
 
             <button onclick="openRule()" style="width:100%; background:#fdf5e6; border:1px solid #8b4513; color:#8b4513; margin-bottom:15px; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;">📜 プロフェット忘れと指摘について</button>
             
-            <p style="text-align:center; font-size:0.8rem; color:#5c4033; margin:0 0 10px 0;">↓ 予言を達成したら、色に合わせたボタンを押して加点して下さい ↓</p>
+            <div style="background:#fff3cd; border:2px solid #8b4513; padding:12px; border-radius:10px; margin-bottom:15px; font-size:0.9rem; color:#4a3b2c; text-align:center;">
+                <b>予言を達成したら「プロフェット!」と宣言して、予言の内容を全員に開示します。これにより金→5点、銀→2点、銅→1点が加点されます。予言の色に合わせたボタンを押して下さい。</b>
+            </div>
             
             <button class="btn btn-copper" onclick="handleProphet('copper', this)">銅の予言達成 (+1点)</button>
             <button class="btn btn-silver" onclick="handleProphet('silver', this)">銀の予言達成 (+2点)</button>
